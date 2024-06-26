@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HousingLocationComponent],
+  imports: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
