@@ -1,0 +1,15 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Créer un Nouveau Sujet</h1>
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label for="title" class="block">Titre</label>
+      <input type="text" id="title" name="title" [(ngModel)]="newSujet.title" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+    </div>
+
+    <!-- You might need to adjust the author field depending on your application logic -->
+
+    <div class="flex justify-end">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Créer</button>
+    </div>
+  </form>
+</div>

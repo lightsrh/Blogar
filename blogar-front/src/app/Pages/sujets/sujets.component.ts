@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SujetService } from '../sujets.service';
-import { Sujet } from '../sujet';
+import { SujetService } from '../../shared/services/sujet/sujets.service';
+import { Sujet } from '../../interfaces/sujet';
 import { Router } from '@angular/router';
 
 @Component({

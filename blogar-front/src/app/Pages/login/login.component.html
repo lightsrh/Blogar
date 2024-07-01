@@ -3,12 +3,13 @@
     <form>
         <div class="mb-4">
             <label for="username" class="block">Username:</label>
-            <input type="text" id="username" name="username" required class="border border-gray-300 px-2 py-1 rounded">
+            <input type="text" [(ngModel)]="username"  id="username" name="username" required class="border border-gray-300 px-2 py-1 rounded">
         </div>
         <div class="mb-4">
             <label for="password" class="block">Password:</label>
-            <input type="password" id="password" name="password" required class="border border-gray-300 px-2 py-1 rounded">
+            <input type="password" [(ngModel)]="password"  id="password" name="password" required class="border border-gray-300 px-2 py-1 rounded">
         </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded" (click)="login()">Login</button>
+        <div *ngIf="displayError" class="text-red-500">Invalid credentials</div>
     </form>
 </div>
