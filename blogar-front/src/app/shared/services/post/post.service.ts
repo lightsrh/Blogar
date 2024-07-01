@@ -46,4 +46,16 @@ export class PostService {
       return [];
     }
   }
+
+  async createPost(request: any) {
+    const post = {
+      title: request.title,
+      id_sujet: request.id_sujet,
+      content: request.content,
+      author: request.author,
+
+    };
+    const newSujet = await this.pocketBase.collection('posts').create(post);
+
+  }
 }

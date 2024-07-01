@@ -10,7 +10,7 @@ import { CreatesujetComponent } from './Pages/createsujet/createsujet.component'
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent },
-  {path: 'createpost', component: CreatepostComponent},
+  {path: 'sujet/:id/createpost', component: CreatepostComponent},
   {path: 'createsujet', component: CreatesujetComponent},
   {path: 'sujet', component: SujetsComponent},
   {path: 'post/:id', component: PostsComponent},
