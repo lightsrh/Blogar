@@ -13,7 +13,7 @@ export const routes: Routes = [
   {path: 'createpost', component: CreatepostComponent},
   {path: 'createsujet', component: CreatesujetComponent},
   {path: 'sujet', component: SujetsComponent},
-  {path: 'post', component: PostsComponent},
+  {path: 'post/:id', component: PostsComponent},
   {path: 'updatepost', component: UpdatepostComponent},
   {path: 'updatesujet', component: UpdatesujetComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full' } // default route

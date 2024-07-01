@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { SujetService } from '../../shared/services/sujet/sujets.service';
 import { Sujet } from '../../interfaces/sujet';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sujets',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './sujets.component.html',
   styleUrl: './sujets.component.css'
 })
@@ -24,6 +25,10 @@ export class SujetsComponent {
   createsujet() {
     this.router.navigate(['createsujet']);
 
+  }
+
+  trackById(index: number, sujet: any): number {
+    return sujet.id;
   }
   
 
