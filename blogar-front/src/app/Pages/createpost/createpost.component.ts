@@ -36,6 +36,9 @@ export class CreatepostComponent {
       if (user) {
         this.newPost.author = user.username;
       }
+      else {
+        console.log('Pas de user');
+      }
     });
   }
 

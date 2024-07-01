@@ -17,14 +17,14 @@ export class PostService {
   }
 
   async getPostsBySujetId(sujetId: string): Promise<Post[]> {
+    let author = '';
+    
     try {
       // Utilisation de la méthode getList avec un filtre
       let records = await this.pocketBase.collection('posts').getFullList();
       
       // Filtrer les enregistrements pour obtenir uniquement ceux qui correspondent à l'ID du sujet
       records = records.filter((post: any) => post.id_sujet === sujetId);
-      console.log(records);
-      console.log(sujetId);
 
       const posts: Post[] = [];
       for (const record of records) {
@@ -48,13 +48,17 @@ export class PostService {
   }
 
   async createPost(request: any) {
+    let author = '';
+    if (this.pocketBase.authStore.model) {
+      author = this.pocketBase.authStore.model['id'];
+    }
     const post = {
       title: request.title,
       id_sujet: request.id_sujet,
       content: request.content,
-      author: request.author,
-
+      author: author,
     };
+    console.log(post);
     const newSujet = await this.pocketBase.collection('posts').create(post);
 
   }

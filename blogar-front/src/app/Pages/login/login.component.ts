@@ -23,9 +23,6 @@ export class LoginComponent {
 
 
   login() {
-    console.log('login');
-    console.log(this.username);
-    console.log(this.password);
 
     this.authService.login(this.username, this.password).then((res: boolean) => {
       if (res) {

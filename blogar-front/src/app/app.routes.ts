@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Pages/login/login.component';
 import { CreatepostComponent } from './Pages/createpost/createpost.component';
+import { CreatesujetComponent } from './Pages/createsujet/createsujet.component';
 import { SujetsComponent } from './Pages/sujets/sujets.component';
 import { PostsComponent } from './Pages/posts/posts.component';
 import { UpdatepostComponent } from './Pages/updatepost/updatepost.component';
 import { UpdatesujetComponent } from './Pages/updatesujet/updatesujet.component';
-import { CreatesujetComponent } from './Pages/createsujet/createsujet.component';
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent },

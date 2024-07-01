@@ -15,7 +15,6 @@ export class SujetService {
 
   async getTopics() {
     const transactionsRecords = await this.pocketBase.collection('sujets').getFullList();
-    console.log(transactionsRecords);
 
     return transactionsRecords.map((transaction: any) => {
       return {
@@ -31,9 +30,13 @@ export class SujetService {
   }
 
   async createSujet(request: any) {
+    let author = '';
+    if (this.pocketBase.authStore.model) {
+      author = this.pocketBase.authStore.model['id'];
+    }
     const transaction = {
       title: request.title,
-      author: request.author,
+      author: author,
       created: request.created,
       updated: request.updated
     };
