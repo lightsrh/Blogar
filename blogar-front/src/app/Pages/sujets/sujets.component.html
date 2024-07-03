@@ -14,6 +14,8 @@
         <div *ngIf="sujet.author != undefined" class="mt-4 flex space-x-2">
           <button type="button" class="bg-yellow-500 text-white px-4 py-2 rounded" (click)="editSujet(sujet)">Edit</button>
           <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" (click)="deleteSujet(sujet)">Delete</button>
+          <!--display sujet.author-->
+            <p class="text-gray-400 text-sm">Author: {{ sujet.author }}</p>
         </div>
       </div>
     </div>

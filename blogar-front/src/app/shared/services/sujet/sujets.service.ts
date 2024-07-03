@@ -26,24 +26,27 @@ export class SujetService {
   }
 
   async getTopics(): Promise<Sujet[]> {
+    let author = '';
+    
     try {
-      const transactionsRecords = await this.pocketBase.collection('sujets').getFullList();
-      const sujets: Sujet[] = [];
+      let records = await this.pocketBase.collection('sujets').getFullList();
       
-      for (const transaction of transactionsRecords) {
-        const authorUsername = await this.authService.getUsernameById(transaction['author']);
-        sujets.push({
-          id: transaction.id,
-          title: transaction['title'],
+
+      const posts: Sujet[] = [];
+      for (const record of records) {
+        const authorUsername = await this.authService.getUsernameById(record['author']) // Récupérer l'username de l'auteur
+        posts.push({
+          id: record.id,
+          title: record['title'],
           author: authorUsername,
-          created: new Date(transaction.created),
-          updated: new Date(transaction.updated)
+          created: new Date(record.created),
+          updated: new Date(record.updated)
         });
       }
 
-      return sujets;
+      return posts;
     } catch (error) {
-      console.error('Erreur lors de la récupération des sujets:', error);
+      console.error('Erreur lors de la récupération des enregistrements:', error);
       return [];
     }
   }

@@ -43,11 +43,20 @@ export class SujetsComponent implements OnInit {
 
   async deleteSujet(sujet: Sujet) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    console.log('Deleting sujet:', sujet);
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result === true) {
-        await this.sujetService.deleteSujet(sujet.id.toString());
-        this.sujets = this.sujets.filter(s => s.id !== sujet.id);
+        try{
+
+          await this.sujetService.deleteSujet(sujet.id.toString());
+          this.sujets = this.sujets.filter(s => s.id !== sujet.id);
+        }
+        catch (error) {
+          console.error('Erreur lors de la suppression du sujet:', error);
+          //toaster error
+          
+        }
       }
     });
   }
