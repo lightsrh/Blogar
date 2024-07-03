@@ -1,32 +1,51 @@
 import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
+import { AuthService } from '../auth/auth.service';
+import { Sujet } from '../../../interfaces/sujet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SujetService {
-  private pocketBase : PocketBase;
+  private pocketBase: PocketBase;
   private apiUrl = 'http://localhost:8090';
+  authService: AuthService;
+  private sujetTitle: string | null = null;
 
   constructor() {
     this.pocketBase = new PocketBase(this.apiUrl);
-   }
+    this.authService = new AuthService();
+  }
 
+  setSujetTitle(title: string) {
+    this.sujetTitle = title;
+  }
 
-  async getTopics() {
-    const transactionsRecords = await this.pocketBase.collection('sujets').getFullList();
+  getSujetTitle(): string | null {
+    return this.sujetTitle;
+  }
 
-    return transactionsRecords.map((transaction: any) => {
-      return {
-        id: transaction.id,
-        title: transaction.title,
-        description: transaction.description,
-        date: transaction.date,
-        author: transaction.author,
-        created: transaction.created,
-        updated: transaction.updated
+  async getTopics(): Promise<Sujet[]> {
+    try {
+      const transactionsRecords = await this.pocketBase.collection('sujets').getFullList();
+      const sujets: Sujet[] = [];
+      
+      for (const transaction of transactionsRecords) {
+        const authorUsername = await this.authService.getUsernameById(transaction['author']);
+        sujets.push({
+          id: transaction.id,
+          title: transaction['title'],
+          author: authorUsername,
+          created: new Date(transaction.created),
+          updated: new Date(transaction.updated)
+        });
       }
-    });
+
+      return sujets;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des sujets:', error);
+      return [];
+    }
   }
 
   async createSujet(request: any) {
@@ -41,5 +60,10 @@ export class SujetService {
       updated: request.updated
     };
     const newSujet = await this.pocketBase.collection('sujets').create(transaction);
+  }
+
+  async deleteSujet(sujetId: string) {
+    console.log('deleteSujet', sujetId);
+    await this.pocketBase.collection('sujets').delete(sujetId);
   }
 }

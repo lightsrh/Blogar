@@ -43,10 +43,26 @@ export class AuthService {
     }
   }
 
+  public async getUsers(): Promise<User[]> {
+    try {
+      const result = await this.pocketBase.collection('users').getFullList();
+      console.log('result', result);
+      if (result.length > 0) {
+        return result as unknown as User[];
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération des utilisateurs :', error);
+      return [];
+    }
+    return [];
+  }
+
   public async getUsernameById(userId: string): Promise<User> {
     try {
+      
       const result =  await this.pocketBase.collection('users').getOne(userId);
       return { username: result['username'], isValid: true, authModel: null, token: '' };
+
     } catch (error) {
       console.error('Erreur lors de la récupération de l\'username :', error);
       return { username: '', isValid: false, authModel: null, token: '' };

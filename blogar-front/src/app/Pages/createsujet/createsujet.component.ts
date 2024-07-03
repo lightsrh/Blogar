@@ -13,13 +13,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreatesujetComponent {
   author = {
+    id: 0, // l'ID sera généré par le backend
+    username: 'user',
+    email: '',
+    isValid: false,
+    authModel: null,
+    token: ''
 
   };
   newSujet: Sujet = {
-    id: 0, // l'ID sera généré par le backend
+    id: '0', // l'ID sera généré par le backend
     title: '',
     created: new Date(),
-    updated: new Date()
+    updated: new Date(),
+    author: this.author
   };
 
   constructor(private sujetService: SujetService, private router: Router) { }

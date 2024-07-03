@@ -1,9 +1,9 @@
 import { User } from "./user";
 
 export interface Sujet {
-    id: number;
+    id: string;
     title: string;
-    // author: User;
+    author: User;
     created: Date;
     updated: Date;
 }

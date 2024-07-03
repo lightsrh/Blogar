@@ -4,7 +4,7 @@ export interface Post {
     id: string;
     title: string;
     id_sujet: number;
-    author: User;
+    author?: User;
     content: string;
     created: Date;
     updated: Date;
