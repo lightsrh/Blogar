@@ -37,8 +37,9 @@ export class SujetsComponent implements OnInit {
     this.router.navigate(['/post', sujet.id]);
   }
 
-  editSujet(sujet: Sujet) {
+  async editSujet(sujet: Sujet) {
     console.log('Editing sujet:', sujet);
+    this.router.navigate([`sujet/${sujet.id}/editsujet`]);
   }
 
   async deleteSujet(sujet: Sujet) {

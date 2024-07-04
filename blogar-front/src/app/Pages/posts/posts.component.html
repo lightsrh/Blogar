@@ -13,7 +13,12 @@
       <!-- <p class="text-gray-400 text-sm mt-2">Author: {{ post.author?.username }}</p> -->
       <p class="text-gray-400 text-sm">Created: {{ post.created | date:'medium' }}</p>
       <p class="text-gray-400 text-sm">Updated: {{ post.updated | date:'medium' }}</p>
+      <div *ngIf="post.author?.username != ''" class="mt-4 flex space-x-2">
+        <button type="button" class="bg-yellow-500 text-white px-4 py-2 rounded" (click)="editPost(post)">Edit</button>
+        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" (click)="deletePost(post)">Delete</button>
+      </div>
     </div>
+    
   </div>
   <ng-template #noPosts>
     <p>Aucun post trouvé pour ce sujet.</p>

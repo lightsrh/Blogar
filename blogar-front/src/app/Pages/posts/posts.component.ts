@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PostService } from '../../shared/services/post/post.service'; // Assurez-vous que ce chemin est correct
 import { Post } from '../../interfaces/post'; // Assurez-vous que ce chemin est correct
 import { SujetService } from '../../shared/services/sujet/sujets.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-posts',
@@ -17,7 +19,7 @@ export class PostsComponent implements OnInit {
   sujetId: string = '0';
   sujetTitle: string | null = null;
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router, private sujetService: SujetService) {}
+  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router, private sujetService: SujetService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -39,6 +41,31 @@ export class PostsComponent implements OnInit {
 
   return(){
     this.router.navigate(['sujet']);
+  }
+
+  async editPost(post: Post) {
+    console.log('Editing post:', post);
+    this.router.navigate([`sujet/${this.sujetId}/editpost/${post.id}`]);
+  }
+
+  async deletePost(post: Post) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    console.log('Deleting sujet:', post);
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result === true) {
+        try{
+
+          await this.postService.deletePost(post.id.toString());
+          this.posts = this.posts.filter(s => s.id !== post.id);
+        }
+        catch (error) {
+          console.error('Erreur lors de la suppression du sujet:', error);
+          //toaster error
+          
+        }
+      }
+    });
   }
 
   

@@ -62,4 +62,39 @@ export class PostService {
     const newSujet = await this.pocketBase.collection('posts').create(post);
 
   }
+
+  async getPostById (id: string): Promise<Post | null> {
+    try {
+      const record = await this.pocketBase.collection('posts').getOne(id);
+      if (record) {
+        const authorUsername = await this.authService.getUsernameById(record['author']);
+        return {
+          id: record.id,
+          title: record['title'],
+          id_sujet: record['id_sujet'],
+          content: record['content'],
+          created: new Date(record.created),
+          updated: new Date(),
+        }
+      }
+    } catch (error) {
+      console.error('Error getting post:', error);
+    }
+    return null;
+  }
+
+async updatePost(id: string, post: Post) {
+  console.log("post : ", post);
+    const transaction = {
+      title: post.title,
+      id_sujet: post.id_sujet,
+      content: post.content,
+      updated: new Date()
+    };
+    await this.pocketBase.collection('posts').update(id, transaction);
+  }
+
+  async deletePost(id: string) {
+    await this.pocketBase.collection('posts').delete(id);
+  }
 }

@@ -51,6 +51,33 @@ export class SujetService {
     }
   }
 
+  async getSujetById(sujetId: string): Promise<Sujet | null> {
+    try {
+      const record = await this.pocketBase.collection('sujets').getOne(sujetId);
+      if (record) {
+        const authorUsername = await this.authService.getUsernameById(record['author']);
+        return {
+          id: record.id,
+          title: record['title'],
+          author: authorUsername,
+          created: new Date(record.created),
+          updated: new Date()
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du sujet:', error);
+    }
+    return null;
+  }
+
+  async updateSujet(sujetId: string, sujet: Sujet) {
+    const updatedSujet = {
+      title: sujet.title,
+      updated: sujet.updated
+    }
+    await this.pocketBase.collection('sujets').update(sujetId, sujet);
+  }
+
   async createSujet(request: any) {
     let author = '';
     if (this.pocketBase.authStore.model) {
