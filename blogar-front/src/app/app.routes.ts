@@ -7,16 +7,17 @@ import { UpdateSujetComponent } from './Pages/updatesujet/updatesujet.component'
 import { UpdatepostComponent } from './Pages/updatepost/updatepost.component';
 import { SujetsComponent } from './Pages/sujets/sujets.component';
 import { LoginComponent } from './Pages/login/login.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
-  {path: 'login', component: LoginComponent },
-  {path: 'sujet/:id/createpost', component: CreatepostComponent},
-  {path: 'createsujet', component: CreatesujetComponent},
-  {path: 'sujet', component: SujetsComponent},
-  {path: 'post/:id', component: PostsComponent},
-  {path: 'sujet/:id/editpost/:id', component: UpdatepostComponent},
-  {path: 'sujet/:id/editsujet', component: UpdateSujetComponent},
-  {path: '', redirectTo: '/login', pathMatch: 'full' } // default route
+  { path: 'login', component: LoginComponent },
+  { path: 'sujet/:id/createpost', component: CreatepostComponent, canActivate: [AuthGuard] },
+  { path: 'createsujet', component: CreatesujetComponent, canActivate: [AuthGuard] },
+  { path: 'sujet', component: SujetsComponent, canActivate: [AuthGuard] },
+  { path: 'post/:id', component: PostsComponent, canActivate: [AuthGuard] },
+  { path: 'sujet/:id/editpost/:id', component: UpdatepostComponent, canActivate: [AuthGuard] },
+  { path: 'sujet/:id/editsujet', component: UpdateSujetComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' } // default route
 ];
 
 @NgModule({
