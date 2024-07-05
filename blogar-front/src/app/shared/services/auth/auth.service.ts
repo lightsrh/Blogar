@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PocketBase from 'pocketbase';
 import { environment } from '../../../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface User {
   username: string;
@@ -20,9 +21,11 @@ export class AuthService {
 
   private pocketBase: PocketBase;
   private apiUrl = environment.baseUrl;
+  router: Router;
 
   constructor() {
     this.pocketBase = new PocketBase(this.apiUrl);
+    this.router = new Router();
   }
 
   public async login(username: string, password: string): Promise<boolean> {
@@ -68,4 +71,11 @@ export class AuthService {
       return { username: '', isValid: false, authModel: null, token: '' };
     }
   }
+
+  public logout(): void {
+    this.pocketBase.authStore.clear();
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
+  }
+  
 }

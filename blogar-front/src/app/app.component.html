@@ -1,15 +1,16 @@
-<div class="container">
-  <header>
-    <h1 class="text-center text-4xl font-bold text-green-200">
-      {{title}}
-    </h1>
+<div class="min-h-screen bg-cover bg-center relative" style="background-image: url('../assets/appbar.jpg')">
+  <div class="absolute inset-0 bg-white bg-opacity-50"></div> <!-- Superposition -->
+  <header class="relative bg-gray-900 bg-opacity-75 p-4 flex justify-between items-center">
+    <div class="flex-1 text-center">
+      <h1 class="text-9xl font-bold text-green-200">
+        {{title}}
+      </h1>
+    </div>
+    <button (click)="logout()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+      Logout
+    </button>
   </header>
-  <content>
-    <a routerLink="/login"></a>
-    <a routerLink="/test"></a>
-    <router-outlet>
-      
-    </router-outlet>
-
-  </content>
+  <div class="relative container mx-auto mt-8">
+    <router-outlet></router-outlet>
+  </div>
 </div>

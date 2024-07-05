@@ -6,6 +6,7 @@ import { UpdatepostComponent } from './Pages/updatepost/updatepost.component';
 import { UpdateSujetComponent } from './Pages/updatesujet/updatesujet.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { SujetsComponent } from './Pages/sujets/sujets.component';
+import { AuthService } from './shared/services/auth/auth.service';
 
 //source file that describes the app-root component.
 
@@ -17,5 +18,11 @@ import { SujetsComponent } from './Pages/sujets/sujets.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Blogar';
+
+  constructor(private authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
+  }
 }

@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-bold">{{ sujetTitle }}</h1>
     <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="createPost()">Create Post</button>
   </div>
-  <h2 class="text-xl font-semibold mb-4">Liste des Posts</h2>
+  <h2 class="text-xl font-semibold mb-4">Posts List</h2>
   <div *ngIf="posts.length > 0; else noPosts">
     <div *ngFor="let post of posts" class="bg-white shadow rounded p-4 mb-4">
       <h3 class="text-xl font-semibold mb-2">{{ post.title }}</h3>
