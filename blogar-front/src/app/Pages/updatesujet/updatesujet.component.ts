@@ -21,7 +21,8 @@ export class UpdateSujetComponent implements OnInit {
       username: 'user',
       isValid: false,
       authModel: null,
-      token: ''
+      token: '',
+      id: '',
     }
   };
   editMode = false;

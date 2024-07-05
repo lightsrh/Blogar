@@ -89,8 +89,10 @@ async updatePost(id: string, post: Post) {
       title: post.title,
       id_sujet: post.id_sujet,
       content: post.content,
+      author: post.author,
       updated: new Date()
     };
+    console.log("transaction : ", transaction);
     await this.pocketBase.collection('posts').update(id, transaction);
   }
 

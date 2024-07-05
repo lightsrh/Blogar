@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CreatesujetComponent {
   author = {
-    id: 0, // l'ID sera généré par le backend
+    id: '0', // l'ID sera généré par le backend
     username: 'user',
     email: '',
     isValid: false,

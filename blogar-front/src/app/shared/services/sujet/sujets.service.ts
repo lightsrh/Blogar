@@ -73,9 +73,11 @@ export class SujetService {
   async updateSujet(sujetId: string, sujet: Sujet) {
     const updatedSujet = {
       title: sujet.title,
-      updated: sujet.updated
+      updated: sujet.updated,
+      author: sujet.author.id
     }
-    await this.pocketBase.collection('sujets').update(sujetId, sujet);
+    console.log('updateSujet', updatedSujet);
+    await this.pocketBase.collection('sujets').update(sujetId, updatedSujet);
   }
 
   async createSujet(request: any) {

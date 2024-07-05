@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PostService } from '../../shared/services/post/post.service'; // Assurez-vous que ce chemin est correct
-import { Post } from '../../interfaces/post'; // Assurez-vous que ce chemin est correct
+import { PostService } from '../../shared/services/post/post.service';
+import { Post } from '../../interfaces/post';
 import { SujetService } from '../../shared/services/sujet/sujets.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import PocketBase from 'pocketbase';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-posts',
@@ -18,12 +20,23 @@ export class PostsComponent implements OnInit {
   posts: Post[] = [];
   sujetId: string = '0';
   sujetTitle: string | null = null;
+  pocketBase: PocketBase;
+  currentUserId: string | null = null;
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private router: Router, private sujetService: SujetService, public dialog: MatDialog) {}
+  constructor(
+    private postService: PostService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private sujetService: SujetService, 
+    public dialog: MatDialog
+  ) {
+    this.pocketBase = new PocketBase(environment.baseUrl);
+    this.currentUserId = this.pocketBase.authStore.model?.['id'] ?? null;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.sujetId = params['id']; // Le signe + convertit la chaîne en nombre
+      this.sujetId = params['id'];
       this.getPostsBySujetId(this.sujetId);
     });
     this.sujetTitle = this.sujetService.getSujetTitle();
@@ -39,34 +52,30 @@ export class PostsComponent implements OnInit {
     this.router.navigate([`sujet/${this.sujetId}/createpost`]); 
   }
 
-  return(){
+  return() {
     this.router.navigate(['sujet']);
   }
 
-  async editPost(post: Post) {
-    console.log('Editing post:', post);
+  async editPost(event: Event, post: Post) {
+    event.stopPropagation();
     this.router.navigate([`sujet/${this.sujetId}/editpost/${post.id}`]);
   }
 
-  async deletePost(post: Post) {
+  async deletePost(event: Event, post: Post) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
-    console.log('Deleting sujet:', post);
+    console.log('Deleting post:', post);
 
     dialogRef.afterClosed().subscribe(async result => {
       if (result === true) {
-        try{
-
+        try {
           await this.postService.deletePost(post.id.toString());
           this.posts = this.posts.filter(s => s.id !== post.id);
-        }
-        catch (error) {
-          console.error('Erreur lors de la suppression du sujet:', error);
-          //toaster error
-          
+        } catch (error) {
+          console.error('Erreur lors de la suppression du post:', error);
+          // Afficher une notification d'erreur
         }
       }
     });
   }
-
-  
 }

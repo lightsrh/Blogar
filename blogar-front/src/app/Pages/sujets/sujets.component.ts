@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import PocketBase from 'pocketbase';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-sujets',
@@ -18,14 +20,18 @@ export class SujetsComponent implements OnInit {
   sujets: Sujet[] = [];
   pagedSujets: Sujet[] = [];
   pageSize = 5;
-  pageEvent: PageEvent = new PageEvent();
+  pageEvent: PageEvent = { pageIndex: 0, pageSize: this.pageSize, length: this.sujets.length };
+  pocketBase: PocketBase;
+  currentUserId: string;
 
-  constructor(private sujetService: SujetService, private router: Router, public dialog: MatDialog) { }
+  constructor(private sujetService: SujetService, private router: Router, public dialog: MatDialog) {
+    this.pocketBase = new PocketBase(environment.baseUrl);
+    this.currentUserId = this.pocketBase.authStore.model?.['id'];  // Assurez-vous que l'utilisateur est connecté et que l'ID est disponible
+  }
 
   ngOnInit(): void {
     this.sujetService.getTopics().then(sujets => {
       this.sujets = sujets;
-      this.pageEvent = { length: this.sujets.length, pageIndex: 0, pageSize: this.pageSize}
       this.getPagedSujets();
     });
   }

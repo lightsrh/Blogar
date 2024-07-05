@@ -9,6 +9,7 @@ export interface User {
   isValid: boolean;
   authModel: any | null; // Assurez-vous que le type AuthModel est correctement importé depuis pocketbase
   token: string;
+  id: string;
 }
 
 @Injectable({
@@ -36,7 +37,8 @@ export class AuthService {
         username: username,
         isValid: this.pocketBase.authStore.isValid,
         authModel: this.pocketBase.authStore.model,
-        token: this.pocketBase.authStore.token
+        token: this.pocketBase.authStore.token,
+        id: this.pocketBase.authStore.model ? this.pocketBase.authStore.model['id'] : ''
       });
 
       return this.pocketBase.authStore.isValid;
@@ -64,11 +66,11 @@ export class AuthService {
     try {
       
       const result =  await this.pocketBase.collection('users').getOne(userId);
-      return { username: result['username'], isValid: true, authModel: null, token: '' };
+      return { username: result['username'], isValid: true, authModel: result['authModel'], token: '', id: result['id'] };
 
     } catch (error) {
       console.error('Erreur lors de la récupération de l\'username :', error);
-      return { username: '', isValid: false, authModel: null, token: '' };
+      return { username: '', isValid: false, authModel: null, token: '', id: ''};
     }
   }
 
