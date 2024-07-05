@@ -3,12 +3,15 @@
 ## Backend
 
 ``` bash
+cd backend
 ./pocketbase serve
 ```
 
 ## Frontend
 
 ``` bash
+cd ../blogar-front
+npm i
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 ```
 
