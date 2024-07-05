@@ -7,7 +7,7 @@ import { UpdateSujetComponent } from './Pages/updatesujet/updatesujet.component'
 import { UpdatepostComponent } from './Pages/updatepost/updatepost.component';
 import { SujetsComponent } from './Pages/sujets/sujets.component';
 import { LoginComponent } from './Pages/login/login.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

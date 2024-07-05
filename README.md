@@ -25,7 +25,6 @@ password : motdepasse
 - Posts page displaying a list of all the created posts with various informations. Everyone can create a post but only the owner can update or delete it
 - Update page for subject and post
 
-
 ## Screenshots of the app
 
 ### Login Page
@@ -40,6 +39,8 @@ password : motdepasse
 
 ![Posts page](/blogar-front/src/assets/posts.png)
 
-### Edit page
+### Edit pages
 
 ![Edit page](/blogar-front/src/assets/edit.png)
+
+![Edit page](/blogar-front/src/assets/edit2.png)
