@@ -11,3 +11,8 @@
 ``` bash
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 ```
+
+Credentials to connect to the app :
+
+login : professeur
+password : motdepasse
